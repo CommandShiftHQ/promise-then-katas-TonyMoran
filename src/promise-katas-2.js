@@ -48,6 +48,17 @@ const dog = async () => {
     const naughtyDog = response.data.dogs.sort((a, b)=> b.naughty - a.naughty)
     return naughtyDog[0]
 };
+// Alternative solution from Chris.
+// const dog2 = async () => {
+//     const response = await fetch("dogs", {});
+//     const naughtiestDog = response.data.dogs.reduce(
+//       (mostNaughty, dog) => {
+//         return dog.naughty > mostNaughty.naughty ? dog : mostNaughty;
+//       },
+//       { naughty: 0 }
+//     );
+//     return naughtiestDog;
+//   };
 
 // 4 Create a function that uses the fetch function to make requests to the "jokes" URL and returns
 // a joke object with the key of question and answer - expected return { 
@@ -59,7 +70,12 @@ const dog = async () => {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
 //
 
-const joke = () => {};
+const joke = async () => {
+    const question = await fetch("jokes", "question");
+    const joke = await fetch("jokes");
+  
+    return { question: question.joke, answer: joke.answer };
+}
 
 module.exports = {
     food,

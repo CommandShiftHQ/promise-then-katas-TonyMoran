@@ -45,10 +45,10 @@ const cat = async () => {
 const dog = async () => {
     const response = await fetch('dogs')
     console.log(response)
-    const naughtyDog = response.data.dogs.sort((a, b)=> b.naughty - a.naughty)
+    const naughtyDog = response.data.dogs.sort((previous, current)=> current.naughty - previous.naughty)
     return naughtyDog[0]
 };
-// Alternative solution from Chris.
+// Alternative solution from Chris Edwards. Included here for Chris' kata only.
 // const dog2 = async () => {
 //     const response = await fetch("dogs", {});
 //     const naughtiestDog = response.data.dogs.reduce(

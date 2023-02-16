@@ -25,17 +25,40 @@ fetch("joke", "question").then(<insert your callback function>)
 // 1 Create a function that uses the fetch function to make a request to the "food" URL and returns
 // the data - expected return value "Cheese" of type String
 
-const food = () => {};
+const food = async () => {
+  const response = await fetch('food')
+  console.log(response)
+  return response.data
+};
 
 // 2 Create a function that uses the fetch function to make a request to the "cats" URL and returns
 // a list of cats in alphabetical order - expected return value ["Bandit", "Berry", "Puss in boots", "Smokey"] of type Array
 
-const cat = () => {};
-
+const cat = async () => {
+    const response = await fetch('cats')
+    console.log(response)
+    return response.data.cats.sort()
+};
 // 3 Create a function that uses the fetch function to make a request to the "dogs" URL and returns
 // the naughtiest dog - expected return value {name: "Mutley", naughty: 10} of type Object
 
-const dog = () => {};
+const dog = async () => {
+    const response = await fetch('dogs')
+    console.log(response)
+    const naughtyDog = response.data.dogs.sort((previous, current)=> current.naughty - previous.naughty)
+    return naughtyDog[0]
+};
+// Alternative solution from Chris Edwards. Included here for Chris' kata only.
+// const dog2 = async () => {
+//     const response = await fetch("dogs", {});
+//     const naughtiestDog = response.data.dogs.reduce(
+//       (mostNaughty, dog) => {
+//         return dog.naughty > mostNaughty.naughty ? dog : mostNaughty;
+//       },
+//       { naughty: 0 }
+//     );
+//     return naughtiestDog;
+//   };
 
 // 4 Create a function that uses the fetch function to make requests to the "jokes" URL and returns
 // a joke object with the key of question and answer - expected return { 
@@ -47,7 +70,12 @@ const dog = () => {};
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
 //
 
-const joke = () => {};
+const joke = async () => {
+    const question = await fetch("jokes", "question");
+    const joke = await fetch("jokes");
+  
+    return { question: question.joke, answer: joke.answer };
+}
 
 module.exports = {
     food,
